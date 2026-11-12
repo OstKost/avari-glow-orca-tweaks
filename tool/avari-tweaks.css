@@ -223,6 +223,10 @@
   background-color: #101625 !important;
   background-image: linear-gradient(160deg, #131a2b 0%, #0e1421 54%, #101b2f 100%) !important;
 }
+/* Align the sidebar top with the inset central pane below the tab strip. */
+.bg-worktree-sidebar.flex.flex-col.overflow-hidden:has([data-worktree-sidebar-container]) {
+  margin-top: 10px;
+}
 .bg-worktree-sidebar.flex.flex-col.overflow-hidden:has([data-worktree-sidebar-container])::after,
 .bg-sidebar.flex.flex-col.flex-1.min-w-0.overflow-hidden::after {
   content: "";

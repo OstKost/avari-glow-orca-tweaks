@@ -2,7 +2,7 @@
   "manifestVersion": 2,
   "id": "avari-glow-tweaks",
   "name": "Avari Glow Tweaks",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Optional macOS interface tweaks for Avari Glow. Builds a local tool with Go and modifies Orca.app after an explicit action.",
   "repository": "https://github.com/OstKost/avari-glow-orca-tweaks",
   "homepage": "https://github.com/OstKost/orca-avari-glow-theme",
