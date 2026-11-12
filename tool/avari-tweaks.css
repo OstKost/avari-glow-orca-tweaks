@@ -1,0 +1,303 @@
+/* feature:tabs */
+/* Orca 1.4: real tabs expose data-active on the draggable tab itself. */
+@property --avari-tab-level { syntax: "<number>"; inherits: false; initial-value: 0; }
+[data-tab-group-strip-id],
+.h-\[32px\]:has(.terminal-tab-strip) {
+  height: 36px !important;
+}
+.terminal-tab-strip {
+  padding-left: 4px !important;
+}
+.terminal-tab-strip [data-tab-id][data-active] {
+  height: calc(100% - 2px) !important;
+  min-height: 34px !important;
+  width: calc(100% - 6px) !important;
+  margin: 1px 3px !important;
+  padding-inline: 12px !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  border-radius: 9999px !important;
+  --avari-tab-level: 0;
+  background-color: #141722 !important;
+  background-image: linear-gradient(120deg, color-mix(in srgb, #20375e calc(var(--avari-tab-level) * 100%), transparent), color-mix(in srgb, #393052 calc(var(--avari-tab-level) * 100%), transparent) 58%, color-mix(in srgb, #514033 calc(var(--avari-tab-level) * 100%), transparent)) !important;
+  background-size: 100% 100%;
+  color: #9aa6ba !important;
+  overflow: hidden;
+}
+.terminal-tab-strip [data-tab-id][data-active="true"] {
+  --avari-tab-level: 1;
+  border-color: rgba(96,165,250,.65) !important;
+  color: #fff !important;
+  box-shadow: inset 0 0 0 1px rgba(59,130,246,.15), 0 2px 8px rgba(0,0,0,.35);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .terminal-tab-strip :has(> [data-tab-id][data-active]) { perspective: 300px; }
+  .terminal-tab-strip [data-tab-id][data-active] { rotate: var(--avari-tilt-axis, 1 0 0) var(--avari-tilt-angle, 0deg); transition: rotate 200ms ease-out, --avari-tab-level 200ms ease, background-color 200ms ease, color 200ms ease, border-color 200ms ease, scale 180ms ease, box-shadow 200ms ease, filter 180ms ease; }
+  @media (hover: hover) and (pointer: fine) {
+    .terminal-tab-strip [data-tab-id][data-active]:hover { filter: brightness(1.12); box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+    .terminal-tab-strip [data-tab-id][data-active]:active { scale: .97; }
+  }
+}
+.terminal-tab-strip [data-tab-id][data-active="false"]:hover { background-color: #1d2432 !important; color: #e2e8f0 !important; }
+.terminal-tab-strip [data-tab-id] > .bg-tab-active-indicator { display: none !important; }
+.project-view-tab-strip > button { border-radius: 9999px !important; margin: 4px 3px !important; background: #141722; border: 1px solid rgba(255,255,255,.08); }
+/* feature:aurora */
+@property --avari-worktree-level { syntax: "<number>"; inherits: false; initial-value: 0; }
+[data-worktree-card-surface] { --avari-worktree-level: 0; background-image: linear-gradient(115deg, color-mix(in srgb, rgba(37,99,235,.55) calc(var(--avari-worktree-level) * 100%), transparent), color-mix(in srgb, rgba(124,58,237,.40) calc(var(--avari-worktree-level) * 100%), transparent) 55%, color-mix(in srgb, rgba(245,158,11,.28) calc(var(--avari-worktree-level) * 100%), transparent)) !important; background-size: 100% 100%; }
+[data-worktree-card-surface][data-worktree-card-active="primary"] { --avari-worktree-level: 1; /* active gradient remains on the stable surface */ border-radius: 12px !important; border: 1px solid rgba(96,165,250,.55) !important; border-left: 3px solid #60a5fa !important; box-shadow: 0 0 16px rgba(59,130,246,.18); }
+@media (prefers-reduced-motion: no-preference) {
+  :has(> [data-worktree-card-surface][data-worktree-card-active="primary"]) { perspective: 400px; }
+  [data-worktree-card-surface] { rotate: var(--avari-tilt-axis, 1 0 0) var(--avari-tilt-angle, 0deg); transition: rotate 200ms ease-out, --avari-worktree-level 200ms ease, background-color 200ms ease, border-color 200ms ease, scale 180ms ease, box-shadow 200ms ease, filter 180ms ease; }
+  @media (hover: hover) and (pointer: fine) {
+    [data-worktree-card-surface][data-worktree-card-active="primary"]:hover { filter: brightness(1.12); box-shadow: 0 0 18px rgba(59,130,246,.22); }
+    [data-worktree-card-surface][data-worktree-card-active="primary"]:active { scale: .98; }
+  }
+}
+/* feature:panels */
+/* Hide the structural seams while keeping resize handles interactive. */
+.titlebar { border-bottom-color: transparent !important; }
+.titlebar-left { box-shadow: none !important; border-right-color: transparent !important; }
+[data-tab-group-strip-id],
+.h-\[32px\]:has(.terminal-tab-strip) { border-bottom-color: transparent !important; border-right-color: transparent !important; }
+.workspace-sidebar-seam { border-left-color: transparent !important; background: none !important; }
+[data-sidebar-resize-handle] + div { background-color: transparent !important; }
+
+/* Place chromeless pane controls a little farther from the rounded edge. */
+.pane-title-bar[data-chromeless] .pane-title-actions {
+  position: relative;
+  top: 10px;
+  right: 12px;
+  gap: 2px !important;
+}
+.pane-title-bar[data-chromeless] .pane-title-actions button {
+  width: 24px !important;
+  min-width: 24px !important;
+  height: 24px !important;
+  padding: 3px !important;
+  border-radius: 7px;
+}
+.pane-title-bar[data-chromeless] .pane-title-actions button svg {
+  width: 15px !important;
+  height: 15px !important;
+}
+/* The central chat floats inside a softly outlined island. */
+:is([data-structured-agent-session-overlay-tab-id], [data-terminal-chat-view]) [data-native-chat-root] {
+  height: calc(100% - 12px) !important;
+  width: calc(100% - 12px) !important;
+  margin: 6px !important;
+  box-sizing: border-box;
+  border: 1px solid rgba(148,163,184,.15);
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #0e1017;
+  box-shadow: 0 3px 14px rgba(0,0,0,.20);
+}
+/* Warm copper on the upper left fades into a deep blue on the right. */
+[data-native-chat-root],
+.native-chat-appearance.bg-chat-canvas {
+  background-color: #0e1017 !important;
+  background-image: radial-gradient(ellipse 80% 65% at 8% 0%, rgba(116,55,31,.11), transparent 68%), radial-gradient(ellipse 75% 75% at 95% 12%, rgba(28,52,103,.13), transparent 70%), linear-gradient(135deg, #151219 0%, #101119 48%, #0d111c 100%) !important;
+  background-attachment: local;
+}
+/* Chat content and composer share the root's continuous background. */
+[data-native-chat-root] .bg-chat-pane,
+[data-native-chat-root] > .bg-chat-canvas {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+/* File explorer: two independent capsule buttons, scoped to its search mode switch. */
+.bg-sidebar div:has(> [data-slot="toggle-group"][data-ignore-file-explorer-keys]) {
+  background: transparent !important;
+  padding: 0 !important;
+}
+.bg-sidebar [data-slot="toggle-group"][data-ignore-file-explorer-keys] {
+  height: 30px !important;
+  gap: 7px !important;
+}
+.bg-sidebar [data-slot="toggle-group"][data-ignore-file-explorer-keys] > button {
+  height: 28px !important;
+  border-radius: 9999px !important;
+  border: 1px solid rgba(255,255,255,.07) !important;
+  background: linear-gradient(120deg, #242329, #171c29) !important;
+  color: #aab4c5 !important;
+  box-shadow: 0 2px 5px rgba(0,0,0,.22);
+}
+.bg-sidebar [data-slot="toggle-group"][data-ignore-file-explorer-keys] > button[data-state="on"],
+.bg-sidebar [data-slot="toggle-group"][data-ignore-file-explorer-keys] > button[aria-pressed="true"] {
+  background: linear-gradient(120deg, #302d2c, #1d293e) !important;
+  border-color: rgba(148,163,184,.24) !important;
+  color: #f1f5f9 !important;
+}
+.bg-sidebar [data-slot="toggle-group"][data-ignore-file-explorer-keys] > button:focus-visible {
+  outline: 2px solid #60a5fa !important;
+  outline-offset: 2px;
+}
+/* Left navigation and search, inspired by the reference's integration list. */
+[data-contextual-tour-target="sidebar-navigation"] { gap: 4px !important; }
+[data-contextual-tour-target="sidebar-navigation"] > button[aria-label] {
+  min-height: 32px;
+  border-radius: 9999px !important;
+  border: 1px solid rgba(255,255,255,.06) !important;
+  background: #1a202e !important;
+  padding-inline: 12px !important;
+}
+[data-contextual-tour-target="sidebar-navigation"] > button[aria-label]:hover { background: #222b3c !important; }
+[data-contextual-tour-target="sidebar-navigation"] button:has(> svg):has(> span.flex-1):not([aria-label]) {
+  min-height: 34px;
+  border-radius: 10px !important;
+  color: #cbd5e1;
+  gap: 10px !important;
+}
+[data-contextual-tour-target="sidebar-navigation"] button:has(> svg):has(> span.flex-1):not([aria-label]) > svg {
+  box-sizing: content-box;
+  width: 14px;
+  height: 14px;
+  padding: 5px;
+  border-radius: 50%;
+  background: rgba(59,130,246,.10);
+  color: #8ba6cc;
+}
+[data-contextual-tour-target="sidebar-navigation"] button:has(> svg):has(> span.flex-1):not([aria-label]):hover { background: rgba(59,130,246,.10); color: #fff; }
+[data-contextual-tour-target="sidebar-navigation"] button[aria-current="page"] { color: #fff !important; }
+[data-contextual-tour-target="sidebar-navigation"] button:focus-visible { outline: 2px solid #60a5fa; outline-offset: 2px; }
+/* Agent session history: retain the existing controls and virtualized row sizes. */
+[class~="@container/ai-vault"] {
+  background-color: #101522 !important;
+  background-image: linear-gradient(160deg, #141c2d 0%, #10131d 65%, #11121b 100%) !important;
+}
+[class~="@container/ai-vault"] [data-slot="toggle-group"] {
+  gap: 4px !important;
+  padding: 2px !important;
+  border: 0 !important;
+  border-radius: 9999px !important;
+  background: #131926 !important;
+}
+[class~="@container/ai-vault"] [data-slot="toggle-group-item"] {
+  border-radius: 9999px !important;
+  border-color: transparent !important;
+  background: transparent !important;
+  color: #98a8be !important;
+}
+[class~="@container/ai-vault"] [data-slot="toggle-group-item"][data-state="on"],
+[class~="@container/ai-vault"] [data-slot="toggle-group-item"][aria-checked="true"] {
+  background: linear-gradient(120deg, #263a5c, #302b46) !important;
+  border: 1px solid rgba(96,165,250,.3) !important;
+  color: #f1f5f9 !important;
+}
+[class~="@container/ai-vault"] [class~="group/session-row"] {
+  background: rgba(17,23,34,.55) !important;
+  border-bottom: 1px solid rgba(148,163,184,.10) !important;
+  border-radius: 10px;
+  color: #dbe3ef;
+}
+[class~="@container/ai-vault"] [class~="group/session-row"]:hover {
+  background: rgba(74,103,158,.13) !important;
+}
+[class~="@container/ai-vault"] [class~="group/session-row"] [data-testid="ai-vault-session-metadata"] {
+  color: #8b98ad;
+}
+[class~="@container/ai-vault"] div:has(> input.bg-transparent) {
+  border-radius: 9999px !important;
+  background: #1a202e !important;
+  border-color: rgba(255,255,255,.07) !important;
+  padding-inline: 12px !important;
+}
+[class~="@container/ai-vault"] button[aria-expanded][class*="border-y"][class*="bg-sidebar-accent"] {
+  background: transparent !important;
+  border-color: rgba(148,163,184,.12) !important;
+  color: #9baac0 !important;
+}
+[class~="@container/ai-vault"] [role="radiogroup"] {
+  border-radius: 9999px;
+  overflow: hidden;
+}
+/* Sidebars in the reference use an inky blue surface and a narrow blue rim facing the canvas. */
+.bg-worktree-sidebar.flex.flex-col.overflow-hidden:has([data-worktree-sidebar-container]),
+.bg-sidebar.flex.flex-col.flex-1.min-w-0.overflow-hidden {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 0;
+  margin: 6px;
+  border: 1px solid rgba(148,163,184,.15);
+  border-radius: 16px;
+  box-shadow: 0 3px 14px rgba(0,0,0,.20);
+  background-color: #101625 !important;
+  background-image: linear-gradient(160deg, #131a2b 0%, #0e1421 54%, #101b2f 100%) !important;
+}
+.bg-worktree-sidebar.flex.flex-col.overflow-hidden:has([data-worktree-sidebar-container])::after,
+.bg-sidebar.flex.flex-col.flex-1.min-w-0.overflow-hidden::after {
+  content: "";
+  position: absolute;
+  z-index: 5;
+  top: 8%;
+  bottom: 8%;
+  width: 2px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, rgba(59,130,246,.38) 24%, rgba(59,130,246,.7) 50%, rgba(139,92,246,.35) 78%, transparent);
+  box-shadow: 0 0 10px rgba(59,130,246,.4);
+}
+.bg-worktree-sidebar.flex.flex-col.overflow-hidden:has([data-worktree-sidebar-container])::after { right: 0; }
+.bg-sidebar.flex.flex-col.flex-1.min-w-0.overflow-hidden::after { left: 0; }
+[data-worktree-card-surface] { border-radius: 12px; }
+.avari-sidebar-spotlight { position: fixed; z-index: 10000; pointer-events: none; opacity: 0; background: radial-gradient(circle 200px at var(--avari-spot-x, 50%) var(--avari-spot-y, 50%), rgba(110,140,255,.32), rgba(124,58,237,.12) 48%, transparent 100%); transition: opacity 250ms ease; }
+.avari-sidebar-spotlight-visible { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .avari-sidebar-spotlight { display: none; } }
+/* feature:composer */
+[class~="group/composer"] { border-radius: 24px !important; border: 2px solid transparent !important; background-image: linear-gradient(#12151f,#12151f), linear-gradient(120deg,#f59e0b 0%,#ec4899 32%,#3b82f6 66%,#8b5cf6 100%) !important; background-origin: padding-box, border-box; background-clip: padding-box, border-box; background-size: 100% 100%, 100% 100%; }
+[class~="group/composer"] { position: relative; contain: none !important; }
+[class~="group/composer"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: inset 0 0 18px rgba(96,165,250,.14), 0 0 36px 4px rgba(59,130,246,.48);
+  transition: opacity 400ms ease;
+}
+[class~="group/composer"]:focus-within::after { opacity: 1; }
+@keyframes avari-composer-glow {
+  0%, 100% { box-shadow: inset 0 0 16px rgba(96,165,250,.12), 0 0 33px 3px rgba(59,130,246,.43); }
+  50% { box-shadow: inset 0 0 19px rgba(96,165,250,.16), 0 0 38px 4px rgba(59,130,246,.50); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  [class~="group/composer"]::after { animation: avari-composer-glow 3s ease-in-out infinite; }
+}
+@media (prefers-reduced-motion: reduce) {
+  [class~="group/composer"]::after { transition: none; }
+}
+/* feature:badges */
+.bg-host-badge { border-radius: 9999px; }
+/* feature:chips */
+button[class*="suggestion"] { border-radius: 9999px; }
+
+/* feature:panels */
+/* Message navigation retains its original hit targets and keyboard behavior. */
+[data-native-chat-rail] {
+  padding: 7px 2px;
+  right: calc(0.625rem + 2px) !important;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+[data-native-chat-rail] button > span {
+  background: #7185a5 !important;
+}
+[data-native-chat-rail] button:hover > span,
+[data-native-chat-rail] button:focus-visible > span,
+[data-native-chat-rail] button[aria-current="true"] > span {
+  background: linear-gradient(90deg, #f0ac54, #bb80c8 48%, #60a5fa) !important;
+  box-shadow: 0 0 8px rgba(96,165,250,.55);
+}
+/* Chromium ignores WebKit scrollbar styling when scrollbar-width is set to thin. */
+[data-native-chat-scroll] { scrollbar-width: auto !important; scrollbar-color: auto !important; }
+[data-native-chat-scroll]::-webkit-scrollbar { width: 10px; }
+[data-native-chat-scroll]::-webkit-scrollbar-track { background: transparent; }
+[data-native-chat-scroll]::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #699bd6, #7189cf 55%, #9277bc) padding-box !important;
+  box-shadow: inset 0 0 4px rgba(210,235,255,.4);
+}
+[data-native-chat-scroll]::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #b4dcff, #86aaff 55%, #c3a0ed) padding-box !important;
+}
