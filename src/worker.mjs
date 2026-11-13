@@ -18,7 +18,7 @@ async function run(action) {
     buildDir = await mkdtemp(join(tmpdir(), 'avari-tweaks-'))
     const binary = join(buildDir, 'avari-orca-tweak')
     await exec('go', ['build', '-o', binary, '.'], { cwd: toolDir, timeout: 100000, maxBuffer: 1024 * 1024 })
-    const args = action === 'apply' ? ['apply', '--features', 'tabs,aurora,panels,composer'] : [action]
+    const args = action === 'apply' ? ['apply', '--features', 'tabs,aurora,panels,composer,chat-motion,chat-style'] : [action]
     const { stdout, stderr } = await exec(binary, args, { cwd: toolDir, timeout: 15000, maxBuffer: 1024 * 1024 })
     return { message: (stdout || stderr || (action === 'apply' ? 'Tweaks written. Restart Orca to load them.' : 'Tweaks reverted. Restart Orca.')).trim() }
   } catch (error) {

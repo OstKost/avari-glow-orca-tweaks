@@ -305,3 +305,56 @@ button[class*="suggestion"] { border-radius: 9999px; }
 [data-native-chat-scroll]::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #b4dcff, #86aaff 55%, #c3a0ed) padding-box !important;
 }
+
+/* feature:chat-motion */
+@keyframes avari-chat-appear {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Include pending and attachment-only user bubbles. */
+  [data-native-chat-scroll] .bg-chat-user-surface,
+  [data-native-chat-scroll] [data-native-chat-message-id]:not(:has(.bg-chat-user-surface)) {
+    animation: avari-chat-appear 340ms cubic-bezier(.25, .1, .25, 1) backwards;
+    transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  }
+}
+
+/* feature:chat-style */
+/* Scope the user surface to the chat; retain Orca's sizing and controls. */
+[data-native-chat-scroll] .bg-chat-user-surface {
+  background: linear-gradient(135deg, #23334b, #24293d) !important;
+  border-color: rgba(137, 175, 225, .25) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .16);
+}
+/* Orca 1.4.257 renders a non-skipped status row with a faint,
+   non-wrapping label only while the user's message is sending. */
+[data-native-chat-scroll] .group:has(> div:not([data-native-chat-find-skip]) > span.whitespace-nowrap.text-chat-foreground-faint) > .bg-chat-user-surface {
+  border-color: rgba(235, 190, 105, .48) !important;
+  box-shadow: inset 0 0 0 100vmax rgba(217, 164, 67, .13), 0 2px 10px rgba(0, 0, 0, .16);
+}
+@media (prefers-reduced-motion: no-preference) {
+  @media (hover: hover) and (pointer: fine) {
+    [data-native-chat-scroll] :has(> .bg-chat-user-surface) { perspective: 500px; }
+    [data-native-chat-scroll] .bg-chat-user-surface {
+      rotate: var(--avari-tilt-axis, 1 0 0) var(--avari-tilt-angle, 0deg);
+      transition: rotate 200ms ease-out, border-color 220ms ease, box-shadow 220ms ease, filter 180ms ease;
+    }
+    [data-native-chat-scroll] .bg-chat-user-surface:hover { filter: brightness(1.08); }
+  }
+}
+[data-native-chat-scroll] [data-native-chat-code-block] {
+  background: #0b101b !important;
+  border-color: rgba(128, 158, 202, .22) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .16);
+}
+@media (hover: hover) and (pointer: fine) {
+  [data-native-chat-scroll] [data-native-chat-code-block]:hover {
+    border-color: rgba(128, 170, 230, .4) !important;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-native-chat-scroll] [data-native-chat-code-block] {
+    transition: border-color 180ms ease, box-shadow 180ms ease;
+  }
+}

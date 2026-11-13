@@ -23,7 +23,7 @@ var css string
 const start = "/* === AVARI GLOW TWEAKS START [v1.0] === */"
 const end = "/* === AVARI GLOW TWEAKS END === */"
 
-var features = []string{"tabs", "aurora", "panels", "composer", "badges", "chips"}
+var features = []string{"tabs", "aurora", "panels", "composer", "badges", "chips", "chat-motion", "chat-style"}
 
 func detect(app string) (string, error) {
 	matches, err := filepath.Glob(filepath.Join(app, "Contents/Resources/app.asar.unpacked/out/renderer/assets/App-*.css"))
@@ -203,7 +203,7 @@ var menuItems = []string{
 }
 var featureLabels = map[string]string{
 	"tabs": "Вкладки", "aurora": "Свечение Aurora", "panels": "Панели",
-	"composer": "Поле ввода", "badges": "Бейджи", "chips": "Метки",
+	"composer": "Поле ввода", "badges": "Бейджи", "chips": "Метки", "chat-motion": "Анимация сообщений", "chat-style": "Сообщения и код",
 }
 
 type model struct {

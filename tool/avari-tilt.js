@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const selector = '.terminal-tab-strip [data-tab-id][data-active], [data-worktree-card-surface][data-worktree-card-active="primary"]';
+  const selector = '.terminal-tab-strip [data-tab-id][data-active], [data-worktree-card-surface][data-worktree-card-active="primary"], [data-native-chat-scroll] .bg-chat-user-surface';
   const motion = matchMedia('(prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine)');
   let current = null, frame = 0, point = null;
   function reset() {
@@ -24,7 +24,7 @@
       const y = Math.max(-1, Math.min(1, (point.y-r.top)/r.height*2-1));
       const magnitude = Math.min(1, Math.hypot(x,y));
       current.style.setProperty('--avari-tilt-axis', `${(-y).toFixed(3)} ${x.toFixed(3)} 0`);
-      const maxAngle = current.hasAttribute('data-tab-id') ? 1 : 3;
+      const maxAngle = current.hasAttribute('data-tab-id') || current.classList.contains('bg-chat-user-surface') ? 1 : 3;
       current.style.setProperty('--avari-tilt-angle', `${(magnitude * maxAngle).toFixed(2)}deg`);
     });
   }, {passive:true});
